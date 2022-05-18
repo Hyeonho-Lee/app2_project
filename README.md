@@ -15,8 +15,8 @@
 4. 부산시 공공데이터포털 http://data.busan.go.kr/index.nm;jsessionid=6DD159E96EC83393F2BE7B814F65DB99
 
 ## 앱 사이트맵
-![사이트맵](https://user-images.githubusercontent.com/54760301/169053042-56335b22-1848-453b-8be9-2129c29a65a0.JPG)
+![사이트맵스](https://user-images.githubusercontent.com/54760301/169053459-63374822-58bf-45a1-8018-7b5c209959e7.JPG)
 
 ## 화면 설계
 https://www.figma.com/file/V9jiWbDRWT1E9E6hp9ac58/App-Design?node-id=4%3A108
-![화면완성](https://user-images.githubusercontent.com/54760301/169051533-65739f95-e8cc-4f6a-8c40-16f78e3e1909.JPG)
+![화면구성](https://user-images.githubusercontent.com/54760301/169053435-d8a54129-4504-40d7-b5b2-e6bba49943c2.JPG)
