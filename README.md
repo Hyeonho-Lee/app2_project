@@ -22,12 +22,13 @@ https://www.figma.com/file/V9jiWbDRWT1E9E6hp9ac58/App-Design?node-id=4%3A108
 ![화면구성](https://user-images.githubusercontent.com/54760301/169053435-d8a54129-4504-40d7-b5b2-e6bba49943c2.JPG)
 
 ## 앱 화면 디자인 현황
+![화면 디자인](https://user-images.githubusercontent.com/54760301/169198357-9fb5364d-3e3d-473c-9266-731025c2fe28.png)
 
 ## 앱 개발 소스 현황
 https://github.com/Hyeonho-Lee/app2_project
 
 ## 동작 상태 현황
-
+![동작 상태](https://user-images.githubusercontent.com/54760301/169198331-39794bef-f61b-4e58-a59c-ed2ab41110f9.png)
 로그인, 회원가입 기능이 완료되었으며 부산 축제 데이터도 정상적으로 불러와짐
 
 ## 진도(60%)
