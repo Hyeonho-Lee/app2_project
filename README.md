@@ -29,6 +29,7 @@ https://github.com/Hyeonho-Lee/app2_project
 
 ## 동작 상태 현황
 ![동작 상태](https://user-images.githubusercontent.com/54760301/169198331-39794bef-f61b-4e58-a59c-ed2ab41110f9.png)
+
 로그인, 회원가입 기능이 완료되었으며 부산 축제 데이터도 정상적으로 불러와짐
 
 ## 진도(60%)
