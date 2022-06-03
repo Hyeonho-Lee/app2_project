@@ -174,7 +174,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: MediaQuery.of(context).size.height/5,
                   child: Column(
                     children: <Widget>[
-                      login_bg
                     ],
                   )
               ),
@@ -235,8 +234,8 @@ class _LoginScreenState extends State<LoginScreen> {
             .signInWithEmailAndPassword(email: email, password: password)
             .then((uid) => {
           Fluttertoast.showToast(msg: "로그인 성공!"),
-          Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => HomeScreen())),
+          //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomeScreen())),
+          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomeScreen())),
         });
       } on FirebaseAuthException catch (error) {
         switch (error.code) {
