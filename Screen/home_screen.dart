@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
@@ -116,168 +117,284 @@ class _HomeScreenState extends State<HomeScreen> {
                 });
               },
               itemBuilder: (BuildContext context) => Menus.values
-                    .map((value) => PopupMenuItem (
-                      value: value,
-                      child: Text(value.toStrings()),
-                )).toList(),
+                  .map((value) => PopupMenuItem (
+                value: value,
+                child: Text(value.toStrings()),
+              )).toList(),
             )
           ],
         )
       ],
     );
 
-    final cards = ListView.builder(
-      itemBuilder: (context, index) {
-        return Card(
-          child: InkWell(
-            child: Material(
-              color: Colors.black12,
-              child: MaterialButton(
-                elevation: 5,
-                color: Colors.white,
-                padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-                minWidth: 500,
-                height: 200,
+    return Scaffold(
+        backgroundColor: Colors.white,
+        resizeToAvoidBottomInset: false,
+
+        appBar: AppBar(
+          title: Text('로고'),
+          centerTitle: true,
+          backgroundColor: Colors.blue,
+          actions: [
+            /*IconButton(
                 onPressed: () {
-                  print('눌럿냐');
+                  print('아이콘 클릭');
                 },
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Row(
-                  children: <Widget>[
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(15),
-                      child: festival_bg,
-                    ),
-                    SizedBox(width: 20),
-                    Container (
-                      child: Column(
-                        children: <Widget>[
-                          Container(
-                            //color: Colors.red,
-                              height: 50,
-                              width: 190,
-                              child: Text(
-                                all_event![0]['행사명'][index.toString()],
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16,
-                                  letterSpacing: 0.1,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                textAlign: TextAlign.justify,
-                                //overflow: TextOverflow.ellipsis,
-                              )
-                          ),
-                          SizedBox(height: 1),
-                          Container(
-                            //color: Colors.red,
-                              height: 20,
-                              width: 190,
-                              child: Text(
-                                '기간: ' + all_event![0]['시작일자'][index.toString()] + ' ~ ' + all_event![0]['종료일자'][index.toString()],
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 12,
-                                  letterSpacing: 0.1,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                                textAlign: TextAlign.justify,
-                                //overflow: TextOverflow.ellipsis,
-                              )
-                          ),
-                          SizedBox(height: 1),
-                          Container(
-                            //color: Colors.red,
-                              height: 20,
-                              width: 190,
-                              child: Text(
-                                '장소: ' + all_event![0]['개최장소'][index.toString()],
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 12,
-                                  letterSpacing: 0.1,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                                textAlign: TextAlign.justify,
-                                //overflow: TextOverflow.ellipsis,
-                              )
-                          ),
-                          SizedBox(height: 1),
-                          Container(
-                            //color: Colors.red,
-                              height: 50,
-                              width: 190,
-                              child: Text(
-                                '내용: ' + all_event![0]['행사내용'][index.toString()],
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 12,
-                                  letterSpacing: 0.1,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                                textAlign: TextAlign.justify,
-                                //overflow: TextOverflow.ellipsis,
-                              )
-                          ),
-                        ],
+                icon: Icon(Icons.menu)
+            ),*/
+          ],
+        ),
+        endDrawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              Center(
+                child: Container(
+                  width: 500,
+                  height: 250,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.7),
+                        spreadRadius: 0,
+                        blurRadius: 5.0,
+                        offset: Offset(0, 10),
+                      )
+                    ],
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(height: 10),
+                      Container(
+                        width: 120,
+                        height: 120,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          color: Colors.grey,
+                        ),
                       ),
-                    ),
-                  ],
+                      SizedBox(height: 20),
+                      Text(
+                        '닉네임 님\n어서오세요!',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 13,
+                          letterSpacing: 0.1,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.justify,
+                        //overflow: TextOverflow.ellipsis,
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ),
-        );
-      },
-      itemCount: all_event![0]["행사명"].length,
-    );
-
-    return Scaffold(
-      backgroundColor: Colors.white,
-      resizeToAvoidBottomInset: false,
-
-      appBar: AppBar(
-        title: Text('로고'),
-        centerTitle: true,
-        backgroundColor: Colors.white24,
-        actions: [
-          IconButton(
-              onPressed: () {
-                print('아이콘 클릭');
-              },
-              icon: Icon(Icons.menu)
-          ),
-        ],
-      ),
-      //backgroundColor: Colors.white,
-      body: Center(
-        child: SingleChildScrollView(
-          child: Container(
-            child: Container(
-              child: Column(
-                children: [
-                  Container(
-                    //color: Colors.blue,
-                    height: MediaQuery.of(context).size.height/20,
-                    child: slides,
-                  ),
-                  SizedBox(height: 2),
-                  Container(
-                    //color: Colors.black,
-                    height: MediaQuery.of(context).size.height/1.2,
-                    child: Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: cards,
+              SizedBox(height: 20),
+              Center(
+                child: Container(
+                  width: 500,
+                  height: 400,
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        TextButton(
+                          onPressed: () {
+                            //print("공지사항 클릭");
+                            Navigator.of(context).pushReplacementNamed('/notice');
+                          },
+                          child: Text(
+                            '공지사항 ▣',
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 22,
+                              letterSpacing: 0.1,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.right,
+                          ),
+                        ),
+                        SizedBox(height: 5),
+                        TextButton(
+                          onPressed: () {
+                            //print("프로필 클릭");
+                            Navigator.of(context).pushReplacementNamed('/profile');
+                          },
+                          child: Text(
+                            '프로필 ▣',
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 22,
+                              letterSpacing: 0.1,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.right,
+                          ),
+                        ),
+                        SizedBox(height: 5),
+                        TextButton(
+                          onPressed: () {
+                            //print("알림 클릭");
+                            Navigator.of(context).pushReplacementNamed('/alert');
+                          },
+                          child: Text(
+                            '알림 ▣',
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 22,
+                              letterSpacing: 0.1,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.right,
+                          ),
+                        ),
+                      ],
                     ),
                   )
-                ],
-              ),
-            )
-          )
+                ),
+              )
+            ],
+          ),
         ),
-      )
+        //backgroundColor: Colors.white,
+        body: Center(
+          child: SingleChildScrollView(
+              child: Container(
+                  child: Container(
+                    child: Column(
+                      children: [
+                        Container(
+                          //color: Colors.blue,
+                          height: MediaQuery.of(context).size.height/20,
+                          child: slides,
+                        ),
+                        SizedBox(height: 2),
+                        Container(
+                          //color: Colors.black,
+                          height: MediaQuery.of(context).size.height/1.2,
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child:
+                            all_event!.length == 0 ?
+                            serverText :
+                            ListView.builder(
+                              itemBuilder: (context, index) {
+                                return Card(
+                                  child: InkWell(
+                                    child: Material(
+                                      color: Colors.black12,
+                                      child: MaterialButton(
+                                        elevation: 5,
+                                        color: Colors.white,
+                                        padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                                        minWidth: 500,
+                                        height: 200,
+                                        onPressed: () {
+                                          print('눌럿냐');
+                                        },
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(20),
+                                        ),
+                                        child: Row(
+                                          children: <Widget>[
+                                            ClipRRect(
+                                              borderRadius: BorderRadius.circular(15),
+                                              child: festival_bg,
+                                            ),
+                                            SizedBox(width: 20),Container (
+                                              child: Column(
+                                                children: <Widget>[
+                                                  Container(
+                                                    //color: Colors.red,
+                                                      height: 50,
+                                                      width: 190,
+                                                      child: Text(
+                                                        all_event![0]['행사명'][index.toString()],
+                                                        style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 16,
+                                                          letterSpacing: 0.1,
+                                                          fontWeight: FontWeight.bold,
+                                                        ),
+                                                        textAlign: TextAlign.justify,
+                                                        //overflow: TextOverflow.ellipsis,
+                                                      )
+                                                  ),
+                                                  SizedBox(height: 1),
+                                                  Container(
+                                                    //color: Colors.red,
+                                                      height: 20,
+                                                      width: 190,
+                                                      child: Text(
+                                                        '기간: ' + all_event![0]['시작일자'][index.toString()] + ' ~ ' + all_event![0]['종료일자'][index.toString()],
+                                                        style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 12,
+                                                          letterSpacing: 0.1,
+                                                          fontWeight: FontWeight.normal,
+                                                        ),
+                                                        textAlign: TextAlign.justify,
+                                                        //overflow: TextOverflow.ellipsis,
+                                                      )
+                                                  ),
+                                                  SizedBox(height: 1),
+                                                  Container(
+                                                    //color: Colors.red,
+                                                      height: 20,
+                                                      width: 190,
+                                                      child: Text(
+                                                        '장소: ' + all_event![0]['개최장소'][index.toString()],
+                                                        style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 12,
+                                                          letterSpacing: 0.1,
+                                                          fontWeight: FontWeight.normal,
+                                                        ),
+                                                        textAlign: TextAlign.justify,
+                                                        //overflow: TextOverflow.ellipsis,
+                                                      )
+                                                  ),
+                                                  SizedBox(height: 1),
+                                                  Container(
+                                                    //color: Colors.red,
+                                                      height: 50,
+                                                      width: 190,
+                                                      child: Text(
+                                                        '내용: ' + all_event![0]['행사내용'][index.toString()],
+                                                        style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 12,
+                                                          letterSpacing: 0.1,
+                                                          fontWeight: FontWeight.normal,
+                                                        ),
+                                                        textAlign: TextAlign.justify,
+                                                        //overflow: TextOverflow.ellipsis,
+                                                      )
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                              itemCount: all_event![0]["행사명"].length,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+              )
+          ),
+        )
     );
   }
 
