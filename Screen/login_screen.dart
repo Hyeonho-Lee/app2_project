@@ -57,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(
-          '아직 회원이 아니신가요?',
+          '어서 회원가입을 하세요!',
           style: TextStyle(
             color: Colors.black,
             fontSize: 12,
@@ -174,6 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: MediaQuery.of(context).size.height/5,
                   child: Column(
                     children: <Widget>[
+                      login_bg
                     ],
                   )
               ),
