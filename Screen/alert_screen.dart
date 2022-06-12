@@ -14,6 +14,25 @@ class AlertScreen extends StatefulWidget {
 
 class _AlertScreenState extends State<AlertScreen> {
 
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser = UserModel();
+
+  @override
+  void initState() {
+    super.initState();
+
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      this.loggedInUser = UserModel.fromMap(value.data());
+      setState(() {
+
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -64,7 +83,7 @@ class _AlertScreenState extends State<AlertScreen> {
                     ),
                     SizedBox(height: 20),
                     Text(
-                      '닉네임 님\n어서오세요!',
+                      '${loggedInUser.nickname} 님\n어서오세요!',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 13,
