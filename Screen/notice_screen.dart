@@ -1,5 +1,6 @@
 import 'home_screen.dart';
 import '/model/user_model.dart';
+import '/model/notice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -14,8 +15,54 @@ class NoticeScreen extends StatefulWidget {
 
 class _NoticeScreenState extends State<NoticeScreen> {
 
+  NoticeModel notices = NoticeModel();
+
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser = UserModel();
+
+  var all_text = new List.empty(growable: true);
+
+  @override
+  void initState() {
+    super.initState();
+
+    all_text.clear();
+
+    FirebaseFirestore.instance
+        .collection("notice")
+        .get()
+        .then((value) {
+          for (int i = 0; i < value.docs.length; i++) {
+            all_text.add(value.docs[i].data()["text"]);
+          }
+            all_text = List.from(all_text.reversed);
+        }
+      );
+
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      this.loggedInUser = UserModel.fromMap(value.data());
+      setState(() {
+
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    final serverText = Text(
+      '서버와 연결되지 않습니다.',
+      style: TextStyle(
+        color: Colors.black,
+        fontSize: 18,
+        letterSpacing: 2.0,
+      ),
+      textAlign: TextAlign.center,
+    );
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -64,7 +111,7 @@ class _NoticeScreenState extends State<NoticeScreen> {
                     ),
                     SizedBox(height: 20),
                     Text(
-                      '닉네임 님\n어서오세요!',
+                      '${loggedInUser.nickname} 님\n어서오세요!',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 13,
@@ -149,18 +196,52 @@ class _NoticeScreenState extends State<NoticeScreen> {
       body: Center(
         child: SingleChildScrollView(
           child: Column(
-            children: [
-              SizedBox(height: 10),
+            children: <Widget>[
               Container(
-                color: Color(0xffffff),
-                height: MediaQuery.of(context).size.height/1.5,
-                child: Padding(
-                  padding: const EdgeInsets.all(42.0),
-                  child: Text('test'),
+                width: 350,
+                height: 600,
+                decoration: BoxDecoration(
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.circular(15),
                 ),
-              )
+                child: all_text.length != 0 ?
+                ListView.builder(
+                  itemBuilder: (context, index) {
+                    return Card(
+                      child: InkWell(
+                        child: Material(
+                          color: Colors.black12,
+                          child: MaterialButton(
+                            elevation: 5,
+                            color: Colors.white,
+                            padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                            minWidth: 500,
+                            height: 100,
+                            onPressed: () {
+                            },
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: Text(
+                              '${index + 1}. ${all_text[index].toString()}',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 18,
+                                letterSpacing: 0.1,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                  itemCount: all_text.length,
+                ):
+                    serverText
+              ),
             ],
-          ),
+          )
         ),
       ),
     );
