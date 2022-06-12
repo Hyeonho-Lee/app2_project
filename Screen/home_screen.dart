@@ -2,6 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:app2_project/model/user_model.dart';
+import 'package:app2_project/Screen/detail_screen.dart';
 import 'dart:convert';
 
 enum Menus { progress, news, ends}
@@ -32,18 +36,36 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
-  List<bool> _selections1 = List.generate(3, (index) => false);
   Menus? _selection;
   String? lavels;
 
   var response;
   List? all_event;
 
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser = UserModel();
+
+  var indexss;
+  var type_indexss;
+
   @override
   void initState() {
     super.initState();
     all_event = new List.empty(growable: true);
     lavels = "진행중";
+    indexss = 0;
+    type_indexss = 0;
+
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      this.loggedInUser = UserModel.fromMap(value.data());
+      setState(() {
+
+      });
+    });
 
     getJSONDate("progress");
   }
@@ -103,16 +125,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   if (_selection == Menus.news) {
                     getJSONDate("new");
                     lavels = "예정중";
+                    type_indexss = 1;
                   }
 
                   if (_selection == Menus.progress) {
                     getJSONDate("progress");
                     lavels = "진행중";
+                    type_indexss = 2;
                   }
 
                   if (_selection == Menus.ends) {
                     getJSONDate("end");
                     lavels = "완료중";
+                    type_indexss = 3;
                   }
                 });
               },
@@ -177,7 +202,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       SizedBox(height: 20),
                       Text(
-                        '닉네임 님\n어서오세요!',
+                        '${loggedInUser.nickname} 님\n어서오세요!',
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 13,
@@ -194,67 +219,67 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(height: 20),
               Center(
                 child: Container(
-                  width: 500,
-                  height: 400,
-                  color: Colors.white,
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: <Widget>[
-                        TextButton(
-                          onPressed: () {
-                            //print("공지사항 클릭");
-                            Navigator.of(context).pushReplacementNamed('/notice');
-                          },
-                          child: Text(
-                            '공지사항 ▣',
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 22,
-                              letterSpacing: 0.1,
-                              fontWeight: FontWeight.bold,
+                    width: 500,
+                    height: 400,
+                    color: Colors.white,
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: <Widget>[
+                          TextButton(
+                            onPressed: () {
+                              //print("공지사항 클릭");
+                              Navigator.of(context).pushReplacementNamed('/notice');
+                            },
+                            child: Text(
+                              '공지사항 ▣',
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 22,
+                                letterSpacing: 0.1,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.right,
                             ),
-                            textAlign: TextAlign.right,
                           ),
-                        ),
-                        SizedBox(height: 5),
-                        TextButton(
-                          onPressed: () {
-                            //print("프로필 클릭");
-                            Navigator.of(context).pushReplacementNamed('/profile');
-                          },
-                          child: Text(
-                            '프로필 ▣',
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 22,
-                              letterSpacing: 0.1,
-                              fontWeight: FontWeight.bold,
+                          SizedBox(height: 5),
+                          TextButton(
+                            onPressed: () {
+                              //print("프로필 클릭");
+                              Navigator.of(context).pushReplacementNamed('/profile');
+                            },
+                            child: Text(
+                              '프로필 ▣',
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 22,
+                                letterSpacing: 0.1,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.right,
                             ),
-                            textAlign: TextAlign.right,
                           ),
-                        ),
-                        SizedBox(height: 5),
-                        TextButton(
-                          onPressed: () {
-                            //print("알림 클릭");
-                            Navigator.of(context).pushReplacementNamed('/alert');
-                          },
-                          child: Text(
-                            '알림 ▣',
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 22,
-                              letterSpacing: 0.1,
-                              fontWeight: FontWeight.bold,
+                          SizedBox(height: 5),
+                          TextButton(
+                            onPressed: () {
+                              //print("알림 클릭");
+                              Navigator.of(context).pushReplacementNamed('/alert');
+                            },
+                            child: Text(
+                              '알림 ▣',
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 22,
+                                letterSpacing: 0.1,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.right,
                             ),
-                            textAlign: TextAlign.right,
                           ),
-                        ),
-                      ],
-                    ),
-                  )
+                        ],
+                      ),
+                    )
                 ),
               )
             ],
@@ -294,7 +319,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                         minWidth: 500,
                                         height: 200,
                                         onPressed: () {
-                                          print('눌럿냐');
+                                          indexss = index;
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => DetailScreen(indexss: indexss, type_indexss: type_indexss)));
                                         },
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(20),
