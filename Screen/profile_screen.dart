@@ -14,6 +14,25 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
 
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser = UserModel();
+
+  @override
+  void initState() {
+    super.initState();
+
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      this.loggedInUser = UserModel.fromMap(value.data());
+      setState(() {
+
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -64,7 +83,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     SizedBox(height: 20),
                     Text(
-                      '닉네임 님\n어서오세요!',
+                      '${loggedInUser.nickname} 님\n어서오세요!',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 13,
@@ -148,18 +167,128 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       body: Center(
         child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: 10),
-              Container(
-                color: Color(0xffffff),
-                height: MediaQuery.of(context).size.height/1.5,
-                child: Padding(
-                  padding: const EdgeInsets.all(42.0),
-                  child: Text('test'),
-                ),
-              )
-            ],
+          child: Container(
+              height: MediaQuery.of(context).size.height/1.2,
+              width: 350,
+              decoration: BoxDecoration(
+                color: Colors.grey,
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Column(
+                children: <Widget>[
+                  SizedBox(height: 10),
+                  Container(
+                    height: 350,
+                    width: 330,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Center(
+                      child: Column(
+                        children: <Widget>[
+                          SizedBox(height: 50),
+                          Container(
+                            height: 180,
+                            width: 180,
+                            decoration: BoxDecoration(
+                              color: Colors.grey,
+                              borderRadius: BorderRadius.circular(150),
+                            ),
+                          ),
+                          SizedBox(height: 30),
+                          Text(
+                            '${loggedInUser.nickname}님\n어서오세요!',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 2.0,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                    )
+                  ),
+                  SizedBox(height: 10),
+                  Container(
+                    height: 220,
+                    width: 330,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Column(
+                      children: <Widget>[
+                          SizedBox(height: 10),
+                          Material(
+                          elevation: 5,
+                          borderRadius: BorderRadius.circular(30),
+                          color: Colors.grey,
+                          child: MaterialButton(
+                            padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                            minWidth: 300,
+                            onPressed: () {
+                            },
+                            child: Text(
+                              "닉네임 변경",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Material(
+                          elevation: 5,
+                          borderRadius: BorderRadius.circular(30),
+                          color: Colors.grey,
+                          child: MaterialButton(
+                            padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                            minWidth: 300,
+                            onPressed: () {
+                            },
+                            child: Text(
+                              "비밀번호 변경",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Material(
+                          elevation: 5,
+                          borderRadius: BorderRadius.circular(30),
+                          color: Colors.grey,
+                          child: MaterialButton(
+                            padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                            minWidth: 300,
+                            onPressed: () {
+                            },
+                            child: Text(
+                              "로그아웃",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
           ),
         ),
       ),
