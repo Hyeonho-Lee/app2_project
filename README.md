@@ -38,3 +38,5 @@ https://github.com/Hyeonho-Lee/app2_project
 ## 문제점
 각 화면별 구성(UI구현) 작업이 생각 이상으로 시간을 소요하여 작업시간이 오래 걸린다는 문제점이 발견되었다. 
 특히 화면간의 비율을 조정하는 부분, ui의 배치도 부분, 배경 색감등 여러 부분에서 디자인적 감각이 필요하다 느껴지는 부분이다.
+
+https://www.youtube.com/watch?v=r_9Bp4yLvAI
